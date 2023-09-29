@@ -34,14 +34,8 @@ class DetailsScreenState extends State<DetailScreen> {
     } else {
       throw 'Platform not supported.';
     }
-
     Uri uri = Uri.parse(mapsUrl);
-
-    // if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    // } else {
-    //   throw 'Could not launch maps app.';
-    // }
+    await launchUrl(uri);
   }
 
   @override
@@ -56,14 +50,17 @@ class DetailsScreenState extends State<DetailScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                SizedBox(
-                  child: CachedNetworkImage(
-                    imageUrl: Constants.baseAPIUrl + widget.selectedItem.image,
-                    fit: BoxFit.fitWidth,
-                    placeholder: (context, url) => const Center(
-                      child: CircularProgressIndicator(),
+                Hero(
+                  tag: widget.selectedItem.id,
+                  child: SizedBox(
+                    child: CachedNetworkImage(
+                      imageUrl: Constants.baseAPIUrl + widget.selectedItem.image,
+                      fit: BoxFit.fitWidth,
+                      placeholder: (context, url) => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      errorWidget: (context, url, error) => const Icon(Icons.error),
                     ),
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
                   ),
                 ),
                 SizedBox(
@@ -134,7 +131,8 @@ class DetailsScreenState extends State<DetailScreen> {
                                     'assets/icons/ic_location.svg',
                                     width: 2.h,
                                     height: 2.h,
-                                    colorFilter: ColorFilter.mode(AppColors.medium, BlendMode.srcIn),
+                                    colorFilter:
+                                        ColorFilter.mode(AppColors.medium, BlendMode.srcIn),
                                   ),
                                 ),
                                 SizedBox(width: 1.w),
