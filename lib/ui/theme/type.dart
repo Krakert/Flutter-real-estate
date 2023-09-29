@@ -27,20 +27,21 @@ class AppTypography {
     fontFamily: "GothamSSm",
     fontSize: 12,
     fontWeight: FontWeight.w300,
-    color: AppColors.strong,
+    color: AppColors.medium,
   );
 
   static const input = TextStyle(
     fontFamily: "GothamSSm",
-    fontSize: 12,
+    fontSize: 18,
     fontWeight: FontWeight.w300,
+    color: AppColors.strong
   );
 
   static const hint = TextStyle(
     fontFamily: "GothamSSm",
-    fontSize: 12,
+    fontSize: 16,
     fontWeight: FontWeight.w300,
-    color: AppColors.strong,
+    color: AppColors.medium,
   );
 
   static const subtitle = TextStyle(
@@ -53,7 +54,7 @@ class AppTypography {
   static const detail = TextStyle(
     fontFamily: "GothamSSm",
     fontSize: 12,
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
     color: AppColors.medium,
   );
 }
