@@ -9,18 +9,16 @@ import '../components/card_house.dart';
 import '../components/empty_list_waring.dart';
 import '../theme/colors.dart';
 
-final houseDataProvider = listHousesProvider;
-final textSearchBarProvider = StateProvider<String>((ref) => '');
-final textSearchbarIsEmptyProvider =
-    Provider<bool>((ref) => ref.watch(textSearchBarProvider).isEmpty);
-
 class OverviewScreen extends ConsumerWidget {
   final searchController = TextEditingController();
+  final textSearchBarProvider = StateProvider<String>((ref) => '');
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // Watch the list of houses from the provider.
     final houseDataValue = ref.watch(listHousesProvider);
+    final textSearchbarIsEmptyProvider =
+        Provider<bool>((ref) => ref.watch(textSearchBarProvider).isEmpty);
 
     return Column(children: [
       // Search bar section
@@ -137,10 +135,6 @@ class ListViewWidget extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return const EmptyListWarning();
-        } else if (snapshot.connectionState == ConnectionState.waiting) {
-          // Handle the case when the Future is still loading.
-          return Center(
-              child: CircularProgressIndicator()); // You can use any loading indicator widget here.
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
           // Handle the case when the Future completed, but data is null.
           return const EmptyListWarning();
