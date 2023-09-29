@@ -10,7 +10,7 @@ class HouseData {
   final String description;
   final int latitude;
   final int longitude;
-  final String createdDate;
+  final double? distance;
 
   HouseData({
     required this.id,
@@ -24,23 +24,22 @@ class HouseData {
     required this.description,
     required this.latitude,
     required this.longitude,
-    required this.createdDate,
+    this.distance,
   });
 
   factory HouseData.fromJson(Map<String, dynamic> json) {
-    return HouseData(id: json['id'],
-        price: json['price'],
-        image: json['image'],
-        zip: json['zip'],
-        bathrooms: json['bathrooms'],
-        bedrooms: json['bedrooms'],
-        size: json['size'],
-        city: json['city'],
-        description: json['description'],
-        latitude: json['latitude'],
-        longitude: json['longitude'],
-        createdDate: json['createdDate'],
+    return HouseData(
+      id: json['id'],
+      price: json['price'],
+      image: json['image'],
+      zip: json['zip'],
+      bathrooms: json['bathrooms'],
+      bedrooms: json['bedrooms'],
+      size: json['size'],
+      city: json['city'],
+      description: json['description'],
+      latitude: json['latitude'],
+      longitude: json['longitude'],
     );
   }
-
 }
