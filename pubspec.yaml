@@ -6,15 +6,23 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 0.0.1+1
 
 environment:
-  sdk: '>=2.19.4 <4.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
 
-  english_words: ^4.0.0
+  sizer: ^2.0.15
   provider: ^6.0.0
-  flutter_native_splash: ^2.3.2
+  http: ^1.1.0
+  flutter_riverpod: ^2.4.0
+  json_annotation: ^4.8.1
+  flutter_svg: ^2.0.7
+  cached_network_image: ^3.3.0
+  url_launcher: ^6.1.14
+  google_maps_flutter: ^2.5.0
+  location: ^5.0.3
+  geolocator: ^10.0.1
 
 dev_dependencies:
   flutter_test:
@@ -26,6 +34,12 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
+    - assets/images/dtt_banner/hdpi/
+    - assets/images/dtt_banner/ldpi/
+    - assets/images/dtt_banner/mdpi/
+    - assets/images/dtt_banner/xhdpi/
+    - assets/images/dtt_banner/xxhdpi/
+    - assets/images/dtt_banner/xxxhdpi/
 
   fonts:
     - family: GothamSSm
@@ -37,8 +51,4 @@ flutter:
         - asset: assets/fonts/Gotham SSm/GothamSSm-Light.otf
         - asset: assets/fonts/Gotham SSm/GothamSSm-Medium.otf
 
-
-flutter_native_splash:
-  color: "#E65541"
-  android_12:
-    color: "#E65541"
+  uses-material-design: true
