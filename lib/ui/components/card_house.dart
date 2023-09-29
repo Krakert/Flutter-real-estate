@@ -19,6 +19,7 @@ class CardHouse extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        // Navigate to the DetailScreen when the card is tapped.
         Navigator.push(
           context,
           PageRouteBuilder(
@@ -30,16 +31,18 @@ class CardHouse extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 0.75.h, horizontal: 4.w),
         child: Container(
           decoration: BoxDecoration(
-              border: Border.all(
-                color: AppColors.lightGray,
-              ),
-              borderRadius: const BorderRadius.all(Radius.circular(20)),
-              color: AppColors.white),
+            border: Border.all(
+              color: AppColors.lightGray,
+            ),
+            borderRadius: const BorderRadius.all(Radius.circular(20)),
+            color: AppColors.white,
+          ),
           height: 15.5.h,
           child: Padding(
             padding: EdgeInsets.all(2.h),
             child: Row(
               children: [
+                // Display the house image with a hero animation.
                 Hero(
                   tag: house.id,
                   child: CachedNetworkImage(
@@ -59,80 +62,87 @@ class CardHouse extends StatelessWidget {
                 ),
                 const SizedBox(width: 20.0),
                 Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '\$${house.price.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}',
-                          // Regular Expression for put commas to the amount of money
-                          style: AppTypography.title02,
-                        ),
-                        SizedBox(height: 3.0),
-                        Text(
-                          '${house.zip} ${house.city}',
-                          style: AppTypography.body,
-                        ),
-                        SizedBox(height: 33.0),
-                        Row(
-                          children: [
-                            SvgPicture.asset(
-                              'assets/icons/ic_bed.svg',
-                              width: 2.h,
-                              height: 2.h,
-                              colorFilter: ColorFilter.mode(AppColors.medium, BlendMode.srcIn),
-                            ),
-                            const SizedBox(width: 3.0),
-                            Text(
-                              house.bedrooms.toString(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Display the house price with commas.
+                      Text(
+                        '\$${house.price.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}',
+                        style: AppTypography.title02,
+                      ),
+                      SizedBox(height: 3.0),
+                      // Display the house zip code and city.
+                      Text(
+                        '${house.zip} ${house.city}',
+                        style: AppTypography.body,
+                      ),
+                      SizedBox(height: 33.0),
+                      Row(
+                        children: [
+                          // Display the number of bedrooms.
+                          SvgPicture.asset(
+                            'assets/icons/ic_bed.svg',
+                            width: 2.h,
+                            height: 2.h,
+                            colorFilter: ColorFilter.mode(AppColors.medium, BlendMode.srcIn),
+                          ),
+                          const SizedBox(width: 3.0),
+                          Text(
+                            house.bedrooms.toString(),
+                            style: AppTypography.detail,
+                          ),
+                          const SizedBox(width: 24.0),
+                          // Display the number of bathrooms.
+                          SvgPicture.asset(
+                            'assets/icons/ic_bath.svg',
+                            width: 2.h,
+                            height: 2.h,
+                            colorFilter: ColorFilter.mode(AppColors.medium, BlendMode.srcIn),
+                          ),
+                          const SizedBox(width: 3.0),
+                          Text(
+                            house.bathrooms.toString(),
+                            style: AppTypography.detail,
+                          ),
+                          const SizedBox(width: 24.0),
+                          // Display the house size.
+                          SvgPicture.asset(
+                            'assets/icons/ic_layers.svg',
+                            width: 2.h,
+                            height: 2.h,
+                            colorFilter: ColorFilter.mode(AppColors.medium, BlendMode.srcIn),
+                          ),
+                          const SizedBox(width: 2.0),
+                          Expanded(
+                            child: Text(
+                              house.size.toString(),
+                              overflow: TextOverflow.ellipsis,
                               style: AppTypography.detail,
                             ),
-                            const SizedBox(width: 24.0),
-                            SvgPicture.asset(
-                              'assets/icons/ic_bath.svg',
+                          ),
+                          // Display distance and location icon if showDistance is true.
+                          Visibility(
+                            visible: showDistance ?? false,
+                            child: SvgPicture.asset(
+                              'assets/icons/ic_location.svg',
                               width: 2.h,
                               height: 2.h,
                               colorFilter: ColorFilter.mode(AppColors.medium, BlendMode.srcIn),
                             ),
-                            const SizedBox(width: 3.0),
-                            Text(
-                              house.bathrooms.toString(),
+                          ),
+                          const SizedBox(width: 2.0),
+                          Visibility(
+                            visible: showDistance ?? false,
+                            child: Text(
+                              '${house.distance}km',
                               style: AppTypography.detail,
                             ),
-                            const SizedBox(width: 24.0),
-                            SvgPicture.asset(
-                              'assets/icons/ic_layers.svg',
-                              width: 2.h,
-                              height: 2.h,
-                              colorFilter: ColorFilter.mode(AppColors.medium, BlendMode.srcIn),
-                            ),
-                            const SizedBox(width: 2.0),
-                            Expanded(
-                                child: Text(
-                                  house.size.toString(),
-                                  overflow: TextOverflow.ellipsis,
-                                  style: AppTypography.detail,
-                                )),
-                            Visibility(
-                              visible: showDistance ?? false,
-                              child: SvgPicture.asset(
-                                'assets/icons/ic_location.svg',
-                                width: 2.h,
-                                height: 2.h,
-                                colorFilter: ColorFilter.mode(AppColors.medium, BlendMode.srcIn),
-                              ),
-                            ),
-                            const SizedBox(width: 2.0),
-                            Visibility(
-                              visible: showDistance ?? false,
-                              child: Text(
-                                '${house.distance}km',
-                                style: AppTypography.detail,
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ))
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
