@@ -1,16 +1,29 @@
-# flutter_real_estate
-
+# flutter DTT Real Estate App
 Flutter DTT real estate assessment project
 
-## Getting Started
+## Adding API keys
+This project requires 2 API key:
+- Key for DTT endpoint
+- Key for Google Maps SDK Android / iOS
 
-This project is a starting point for a Flutter application.
+### API key DTT endpoint
+Add this API key as additional agrument to `flutter run` \
+`--dart-define="<API_KEY=YOUR_KEY_HERE>"`
 
-A few resources to get you started if this is your first Flutter project:
+### API key Google Maps SDK
+#### Android
+Add the API key to the `local.properties` file in the `android` folder of the project \
+`MAPS_API_KEY=<YOUR_API_KEY_HERE>`
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+#### iOS
+Add the API key to a new file called `keys.plist` file in the `/ios/Runner` folder of the project
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>GOOGLE_MAPS_API_KEY</key>
+	<string>YOUR_API_KEY_HERE</string>
+</dict>
+</plist>
+```
