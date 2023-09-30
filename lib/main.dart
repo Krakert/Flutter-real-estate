@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_real_estate/ui/components/bottom_app_bar.dart';
+import 'package:flutter_real_estate/ui/components/strings.dart';
 import 'package:flutter_real_estate/ui/components/top_app_bar.dart';
 import 'package:flutter_real_estate/ui/screens/about_screen.dart';
 import 'package:flutter_real_estate/ui/screens/overview_screen.dart';
@@ -7,6 +8,8 @@ import 'package:flutter_real_estate/ui/screens/splash_screen.dart';
 import 'package:flutter_real_estate/ui/theme/colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sizer/sizer.dart';
+
+import 'application/providers.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -36,29 +39,15 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomePage extends ConsumerWidget {
+  final List<Widget> screens = [OverviewScreen(), AboutScreen()];
 
   @override
-  State<HomePage> createState() => _HomePageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedIndex = ref.watch(selectedIndexProvider);
 
-class _HomePageState extends State<HomePage> {
-  var selectedIndex = 0;
-  List appBarTitles = ['DTT REAL ESTATE', 'ABOUT'];
-  List screens = [OverviewScreen(), AboutScreen()];
-  bool isLocationPermissionAllowed = true;
-
-  void onClicked(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
-        appBar: TopAppBar(title: appBarTitles[selectedIndex]),
+        appBar: TopAppBar(title: Strings.appBarTitles[selectedIndex]),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -69,9 +58,6 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-        bottomNavigationBar: BottomAppBarMenu(
-          selectedIndex: selectedIndex,
-          onClicked: onClicked,
-        ));
+        bottomNavigationBar: BottomAppBarMenu());
   }
 }

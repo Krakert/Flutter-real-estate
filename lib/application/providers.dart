@@ -9,6 +9,10 @@ import '../models/house_model.dart';
 import '../utils/constants.dart';
 import '../utils/helper.dart';
 
+final selectedIndexProvider = StateProvider<int>((ref) => 0);
+
+final textSearchBarProvider = StateProvider<String>((ref) => '');
+
 final listHousesProvider = FutureProvider<List<HouseData>>((ref) async {
   final client = http.Client();
   final uri = Uri.parse(Constants.houseAPIUrl);

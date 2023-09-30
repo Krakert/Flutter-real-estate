@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../application/providers.dart';
 import '../theme/colors.dart';
 
-class BottomAppBarMenu extends StatelessWidget {
-  final int selectedIndex;
-  ValueChanged<int> onClicked;
-  BottomAppBarMenu({required this.selectedIndex, required this.onClicked});
-
+class BottomAppBarMenu extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedIndex = ref.watch(selectedIndexProvider);
+
     return BottomNavigationBar(
       items: [
         BottomNavigationBarItem(
@@ -21,16 +21,14 @@ class BottomAppBarMenu extends StatelessWidget {
         ),
       ],
       currentIndex: selectedIndex,
-
       backgroundColor: AppColors.white,
       selectedItemColor: AppColors.strong,
       unselectedItemColor: AppColors.light,
-
       showSelectedLabels: false,
       showUnselectedLabels: false,
-
-      onTap: onClicked,
+      onTap: (index) {
+        ref.read(selectedIndexProvider.notifier).state = index;
+      },
     );
   }
-
 }
