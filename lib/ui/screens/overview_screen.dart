@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_real_estate/ui/components/strings.dart';
 import 'package:flutter_real_estate/ui/theme/type.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sizer/sizer.dart';
@@ -11,7 +12,6 @@ import '../theme/colors.dart';
 
 class OverviewScreen extends ConsumerWidget {
   final searchController = TextEditingController();
-  final textSearchBarProvider = StateProvider<String>((ref) => '');
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,7 +36,7 @@ class OverviewScreen extends ConsumerWidget {
               cursorColor: AppColors.medium,
               style: AppTypography.input,
               decoration: InputDecoration(
-                hintText: 'Search for a home',
+                hintText: Strings.searchBarHint,
                 hintStyle: AppTypography.hint,
                 suffixIcon: Consumer(
                   builder: (context, ref, _) =>
@@ -68,11 +68,7 @@ class OverviewScreen extends ConsumerWidget {
       // House list section
       Expanded(
         child: houseDataValue.when(
-          data: (houses) => ListViewWidget(
-            houseList: houses,
-            searchText: ref.watch(textSearchBarProvider),
-            distanceCanBeVisible: ref.watch(locationPermissionProvider).value,
-          ),
+          data: (houses) => ListViewWidget(houseList: houses),
           loading: () => Center(child: CircularProgressIndicator()),
           error: (e, __) => Text(e.toString()),
         ),
@@ -81,18 +77,12 @@ class OverviewScreen extends ConsumerWidget {
   }
 }
 
-class ListViewWidget extends StatelessWidget {
+class ListViewWidget extends ConsumerWidget {
   final List<HouseData> houseList;
-  final String searchText;
-  final bool? distanceCanBeVisible;
 
-  const ListViewWidget(
-      {super.key,
-      required this.houseList,
-      required this.searchText,
-      required this.distanceCanBeVisible});
+  const ListViewWidget({super.key, required this.houseList});
 
-  Future<List<HouseData>> filterHouseList() async {
+  Future<List<HouseData>> filterHouseList(String searchText) async {
     if (searchText.isEmpty) {
       // If searchText is empty, return the original houseList.
       return houseList;
@@ -129,12 +119,18 @@ class ListViewWidget extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final showDistance = ref.watch(locationPermissionProvider);
+    final searchText = ref.watch(textSearchBarProvider);
+
     return FutureBuilder<List<HouseData>>(
-      future: filterHouseList(),
+      future: filterHouseList(searchText),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return const EmptyListWarning();
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          // Handle the case when the Future is still loading.
+          return CircularProgressIndicator(); // You can use any loading indicator widget here.
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
           // Handle the case when the Future completed, but data is null.
           return const EmptyListWarning();
@@ -145,7 +141,7 @@ class ListViewWidget extends StatelessWidget {
             itemCount: filteredHouseList.length,
             itemBuilder: (BuildContext context, int index) {
               final house = filteredHouseList[index];
-              return CardHouse(house: house, showDistance: distanceCanBeVisible);
+              return CardHouse(house: house, showDistance: showDistance.value);
             },
           );
         }
