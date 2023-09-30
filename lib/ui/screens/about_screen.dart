@@ -4,6 +4,7 @@ import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../utils/constants.dart';
+import '../components/strings.dart';
 
 class AboutScreen extends StatelessWidget {
   @override
@@ -16,11 +17,7 @@ class AboutScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Hello, I am Stefan de Kraker, a recently graduated Technical Informatics student with a great passion for hardware and software.'
-                '\n\nDuring my studies I took a minor in mobile application development. Since then, my love and passion for mobile app development has only grown.'
-                '\n\nAlthough developing mobile applications fell outside my regular course of study, I was determined to master new techniques and concepts. I hope my determination comes through in this app, because I haven\'t worked with Flutter before.'
-                '\n\nI hope that DTT can look past this and give me a chance to become a top Flutter developer and thus further strengthen the DTT team.'
-                '\n\nPlease also take a look at my Github for my personal projects such as my smartwatch app and LinkedIn for more information about my background.',
+                Strings.aboutText,
                 style: AppTypography.body,
               ),
               SizedBox(height: 4.h),

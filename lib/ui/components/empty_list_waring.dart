@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_real_estate/ui/components/strings.dart';
 import 'package:flutter_real_estate/ui/theme/type.dart';
 import 'package:sizer/sizer.dart';
 
@@ -17,7 +18,7 @@ class EmptyListWarning extends StatelessWidget {
             height: 25.h,
           ),
           const Text(
-            'No results found! \nPerhaps try another search?',
+            Strings.emptyListWaring,
             textAlign: TextAlign.center,
             style: AppTypography.hint,
           ),

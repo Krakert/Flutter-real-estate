@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_real_estate/models/house_model.dart';
+import 'package:flutter_real_estate/ui/components/strings.dart';
 import 'package:flutter_real_estate/ui/components/top_app_bar.dart';
 import 'package:flutter_real_estate/ui/theme/type.dart';
 import 'package:flutter_svg/svg.dart';
@@ -74,7 +75,7 @@ class DetailsScreenState extends State<DetailScreen> {
                       ),
                     ),
                     child: Padding(
-                      padding: EdgeInsets.only(left: 6.w, right: 6.w, top: 6.h, bottom: 1.h),
+                      padding: EdgeInsets.only(left: 6.w, right: 6.w, top: 6.h, bottom: 12.h),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -174,10 +175,10 @@ class DetailsScreenState extends State<DetailScreen> {
                                 ),
                                 markers: {
                                   Marker(
-                                      markerId: const MarkerId('targetMarker'),
+                                      markerId: const MarkerId(Strings.mapsLocationId),
                                       position: LatLng(widget.selectedItem.latitude.toDouble(),
                                           widget.selectedItem.longitude.toDouble()),
-                                      infoWindow: const InfoWindow(title: 'Location of house'),
+                                      infoWindow: const InfoWindow(title: Strings.mapsText),
                                       onTap: () {
                                         launchMapsApp(widget.selectedItem.latitude.toDouble(),
                                             widget.selectedItem.longitude.toDouble());
