@@ -17,4 +17,8 @@ class Strings {
   static const mapsLocationId = 'targetMarker';
 
   static const emptyListWaring = 'No results found! \nPerhaps try another search?';
+
+  static const filters = ['Price', 'distance', 'bathrooms', 'bedrooms', 'surface area'];
+
+  static const sortText = 'Sort by:';
 }

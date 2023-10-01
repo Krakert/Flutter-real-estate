@@ -10,7 +10,7 @@ class HouseData {
   final String description;
   final int latitude;
   final int longitude;
-  final double? distance;
+  final double distance;
 
   HouseData({
     required this.id,
@@ -24,7 +24,7 @@ class HouseData {
     required this.description,
     required this.latitude,
     required this.longitude,
-    this.distance,
+    required this.distance,
   });
 
   factory HouseData.fromJson(Map<String, dynamic> json) {
@@ -40,6 +40,7 @@ class HouseData {
       description: json['description'],
       latitude: json['latitude'],
       longitude: json['longitude'],
+      distance: 0.0
     );
   }
 }

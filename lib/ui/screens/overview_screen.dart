@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_real_estate/models/sort_model.dart';
 import 'package:flutter_real_estate/ui/components/strings.dart';
 import 'package:flutter_real_estate/ui/theme/type.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,6 +9,7 @@ import '../../application/providers.dart';
 import '../../models/house_model.dart';
 import '../components/card_house.dart';
 import '../components/empty_list_waring.dart';
+import '../components/filter_card.dart';
 import '../theme/colors.dart';
 
 class OverviewScreen extends ConsumerWidget {
@@ -66,6 +68,37 @@ class OverviewScreen extends ConsumerWidget {
         ),
       ),
       // House list section
+      Padding(
+        padding: EdgeInsets.symmetric(horizontal: 4.w),
+        child: SizedBox(
+          // change your height based on preference
+          height: 40,
+          width: double.infinity,
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: const Text(Strings.sortText, textAlign: TextAlign.left),
+              ),
+              Expanded(
+                child: Consumer(
+                  builder: (context, ref, _) => ListView(
+                    // set the scroll direction to horizontal
+                    scrollDirection: Axis.horizontal,
+                    children: <Widget>[
+                      for (final (index, item) in Strings.filters.indexed)
+                        FilterCard(
+                            text: item,
+                            cardId: index,
+                            selectedId: ref.watch(selectedSortProvider).id)
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
       Expanded(
         child: houseDataValue.when(
           data: (houses) => ListViewWidget(houseList: houses),
@@ -122,6 +155,7 @@ class ListViewWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final showDistance = ref.watch(locationPermissionProvider);
     final searchText = ref.watch(textSearchBarProvider);
+    final sortOrder = ref.watch(selectedSortProvider);
 
     return FutureBuilder<List<HouseData>>(
       future: filterHouseList(searchText),
@@ -130,13 +164,41 @@ class ListViewWidget extends ConsumerWidget {
           return const EmptyListWarning();
         } else if (snapshot.connectionState == ConnectionState.waiting) {
           // Handle the case when the Future is still loading.
-          return CircularProgressIndicator(); // You can use any loading indicator widget here.
+          return Center(
+              child: CircularProgressIndicator()); // You can use any loading indicator widget here.
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
           // Handle the case when the Future completed, but data is null.
           return const EmptyListWarning();
         } else {
           List<HouseData> filteredHouseList = snapshot.data!;
-          filteredHouseList.sort((a, b) => a.price.compareTo(b.price));
+
+          filteredHouseList.sort((a, b) {
+            switch (sortOrder.id) {
+              case 0:
+                return sortOrder.oder == Order.asc
+                    ? a.price.compareTo(b.price)
+                    : b.price.compareTo(a.price);
+              case 1:
+                return sortOrder.oder == Order.asc
+                    ? a.distance.compareTo(b.distance)
+                    : b.distance.compareTo(a.distance);
+              case 2:
+                return sortOrder.oder == Order.asc
+                    ? a.bathrooms.compareTo(b.bathrooms)
+                    : b.bathrooms.compareTo(a.bathrooms);
+              case 3:
+                return sortOrder.oder == Order.asc
+                    ? a.bedrooms.compareTo(b.bedrooms)
+                    : b.bedrooms.compareTo(a.bedrooms);
+              case 4:
+                return sortOrder.oder == Order.asc
+                    ? a.size.compareTo(b.size)
+                    : b.size.compareTo(a.size);
+            }
+            // Default sorting if none of the cases match
+            return 0;
+          });
+
           return ListView.builder(
             itemCount: filteredHouseList.length,
             itemBuilder: (BuildContext context, int index) {
