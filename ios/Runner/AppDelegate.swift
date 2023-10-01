@@ -12,11 +12,11 @@ import GoogleMaps
        var apiKey: String {
         get {
           guard let filePath = Bundle.main.path(forResource: "keys", ofType: "plist") else {
-            fatalError("Couldn't find file 'Keys.plist'.")
+            fatalError("Couldn't find file 'keys.plist'.")
           }
           let plist = NSDictionary(contentsOfFile: filePath)
           guard let value = plist?.object(forKey: "GOOGLE_MAPS_API_KEY") as? String else {
-            fatalError("Couldn't find key 'GOOGLE_MAPS_API_KEY' in 'Keys.plist'.")
+            fatalError("Couldn't find key 'GOOGLE_MAPS_API_KEY' in 'keys.plist'.")
           }
           return value
         }
