@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_real_estate/models/sort_model.dart';
+import 'package:flutter_real_estate/ui/components/error_state.dart';
 import 'package:flutter_real_estate/ui/components/strings.dart';
 import 'package:flutter_real_estate/ui/theme/type.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -101,9 +102,10 @@ class OverviewScreen extends ConsumerWidget {
       ),
       Expanded(
         child: houseDataValue.when(
+          skipLoadingOnRefresh: false,
           data: (houses) => ListViewWidget(houseList: houses),
           loading: () => Center(child: CircularProgressIndicator()),
-          error: (e, __) => Text(e.toString()),
+          error: (e, __) => Center(child: ErrorState()),
         ),
       ),
     ]);

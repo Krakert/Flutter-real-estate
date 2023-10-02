@@ -18,7 +18,11 @@ class Strings {
 
   static const emptyListWaring = 'No results found! \nPerhaps try another search?';
 
+  static const errorText = 'Unable to load data \n Please check internet connection';
+
   static const filters = ['Price', 'distance', 'bathrooms', 'bedrooms', 'surface area'];
 
   static const sortText = 'Sort by:';
+
+  static const reloadText = 'Retry loading';
 }
