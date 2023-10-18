@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_real_estate/application/providers.dart';
 import 'package:flutter_real_estate/ui/components/strings.dart';
 import 'package:flutter_real_estate/ui/theme/type.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../application/list_houses_provider.dart';
 import '../theme/colors.dart';
 
 class ErrorState extends ConsumerWidget {
