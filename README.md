@@ -1,6 +1,12 @@
 # flutter DTT Real Estate App
 Flutter DTT real estate assessment project
 
+
+- Android SDK target 34
+- iOS target version 15.x
+
+Do not forget to add the API keys to fully use the app
+
 ## Adding API keys
 This project requires 2 API key:
 - Key for DTT endpoint
@@ -24,6 +30,22 @@ Add the API key to a new file called `keys.plist` file in the `/ios/Runner` fold
 <dict>
 	<key>GOOGLE_MAPS_API_KEY</key>
 	<string>YOUR_API_KEY_HERE</string>
-</dict>
 </plist>
 ```
+
+## Screenshots
+
+<p float="center">
+	<img src="screenshot/screenshot_1.png" width="300" />
+	<img src="screenshot/screenshot_2.png" width="300" /> 
+	<img src="screenshot/screenshot_3.png" width="300" />
+	<img src="screenshot/screenshot_4.png" width="300" />
+</p>
+
+# Hour Log
+
+<p float="left">
+	<img src="screenshot/hour-log.png" width="1200" />
+</p>
+
+
