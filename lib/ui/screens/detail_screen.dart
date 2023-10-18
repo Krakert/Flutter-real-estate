@@ -158,26 +158,24 @@ class DetailScreen extends StatelessWidget {
                           SizedBox(height: 2.h),
                           SizedBox(
                             height: 34.h,
-                            child: Visibility(
-                              visible: screenOpen,
-                              child: GoogleMap(
-                                initialCameraPosition: CameraPosition(
-                                  target: LatLng(widget.selectedItem.latitude.toDouble(),
-                                      widget.selectedItem.longitude.toDouble()),
-                                  zoom: 12,
-                                ),
-                                markers: {
-                                  Marker(
-                                      markerId: const MarkerId(Strings.mapsLocationId),
-                                      position: LatLng(widget.selectedItem.latitude.toDouble(),
-                                          widget.selectedItem.longitude.toDouble()),
-                                      infoWindow: const InfoWindow(title: Strings.mapsText),
-                                      onTap: () {
-                                        launchMapsApp(widget.selectedItem.latitude.toDouble(),
-                                            widget.selectedItem.longitude.toDouble());
-                                      }),
-                                },
+                            child: GoogleMap(
+                              initialCameraPosition: CameraPosition(
+                                target: LatLng(selectedItem.latitude.toDouble(),
+                                    selectedItem.longitude.toDouble()),
+                                zoom: 12,
                               ),
+                              zoomControlsEnabled: false,
+                              mapToolbarEnabled: false,
+                              markers: {
+                                Marker(
+                                    markerId: const MarkerId(Strings.mapsLocationId),
+                                    position: LatLng(selectedItem.latitude.toDouble(),
+                                        selectedItem.longitude.toDouble()),
+                                    onTap: () {
+                                      launchMapsApp(selectedItem.latitude.toDouble(),
+                                          selectedItem.longitude.toDouble());
+                                    }),
+                              },
                             ),
                           ),
                         ],
