@@ -9,17 +9,20 @@ import 'package:sizer/sizer.dart';
 import '../../application/providers.dart';
 import '../../models/house_model.dart';
 import '../components/card_house.dart';
-import '../components/empty_list_waring.dart';
+import '../components/empty_list_warning.dart';
 import '../components/filter_card.dart';
 import '../theme/colors.dart';
 
 class OverviewScreen extends ConsumerWidget {
+  // Controller for the search bar input field.
   final searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // Watch the list of houses from the provider.
     final houseDataValue = ref.watch(listHousesProvider);
+
+    // A provider for tracking if the search bar is empty or not.
     final textSearchBarIsEmptyProvider = StateProvider<bool>((ref) => true);
 
     return Column(children: [
@@ -70,7 +73,7 @@ class OverviewScreen extends ConsumerWidget {
                 ref.read(textSearchBarProvider.notifier).update((_) => value);
               },
               onChanged: (value) {
-                // Update the state of the searchbar
+                // Update the state of the search bar.
                 ref.read(textSearchBarIsEmptyProvider.notifier).update((state) => value.isEmpty);
               },
             ),
@@ -81,7 +84,7 @@ class OverviewScreen extends ConsumerWidget {
       Padding(
         padding: EdgeInsets.symmetric(horizontal: 4.w),
         child: SizedBox(
-          // change your height based on preference
+          // Change your height based on preference
           height: 40,
           width: double.infinity,
           child: Row(
@@ -93,7 +96,7 @@ class OverviewScreen extends ConsumerWidget {
               Expanded(
                 child: Consumer(
                   builder: (context, ref, _) => ListView(
-                    // set the scroll direction to horizontal
+                    // Set the scroll direction to horizontal
                     scrollDirection: Axis.horizontal,
                     children: <Widget>[
                       for (final (index, item) in Strings.filters.indexed)
@@ -126,6 +129,7 @@ class ListViewWidget extends ConsumerWidget {
 
   const ListViewWidget({super.key, required this.houseList});
 
+  // Function to filter the list of houses based on search text.
   Future<List<HouseData>> filterHouseList(String searchText) async {
     if (searchText.isEmpty) {
       // If searchText is empty, return the original houseList.
@@ -157,6 +161,7 @@ class ListViewWidget extends ConsumerWidget {
     }
   }
 
+  // Function to check if a string contains a number.
   bool isIncludeNumber(String str) {
     RegExp regex = RegExp(r'\d');
     return regex.hasMatch(str);
@@ -164,6 +169,7 @@ class ListViewWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Get information from various providers.
     final showDistance = ref.watch(locationPermissionProvider);
     final searchText = ref.watch(textSearchBarProvider);
     final sortOrder = ref.watch(selectedSortProvider);
@@ -175,14 +181,14 @@ class ListViewWidget extends ConsumerWidget {
           return const EmptyListWarning();
         } else if (snapshot.connectionState == ConnectionState.waiting) {
           // Handle the case when the Future is still loading.
-          return Center(
-              child: CircularProgressIndicator()); // You can use any loading indicator widget here.
+          return Center(child: CircularProgressIndicator()); // You can use any loading indicator widget here.
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
           // Handle the case when the Future completed, but data is null.
           return const EmptyListWarning();
         } else {
           List<HouseData> filteredHouseList = snapshot.data!;
 
+          // Sort the filtered house list based on the selected sort order.
           filteredHouseList.sort((a, b) {
             switch (sortOrder.id) {
               case 0:
@@ -210,6 +216,7 @@ class ListViewWidget extends ConsumerWidget {
             return 0;
           });
 
+          // Build a list view of filtered and sorted house items.
           return ListView.builder(
             itemCount: filteredHouseList.length,
             itemBuilder: (BuildContext context, int index) {
