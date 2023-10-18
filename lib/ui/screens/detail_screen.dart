@@ -14,17 +14,10 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../utils/constants.dart';
 import '../theme/colors.dart';
 
-class DetailScreen extends StatefulWidget {
-  const DetailScreen({Key? key, required this.selectedItem}) : super(key: key);
+class DetailScreen extends StatelessWidget {
+  DetailScreen({Key? key, required this.selectedItem}) : super(key: key);
 
   final HouseData selectedItem;
-
-  @override
-  DetailsScreenState createState() => DetailsScreenState();
-}
-
-class DetailsScreenState extends State<DetailScreen> {
-  bool screenOpen = true;
 
   void launchMapsApp(double latitude, double longitude) async {
     String mapsUrl;
@@ -52,10 +45,10 @@ class DetailsScreenState extends State<DetailScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Hero(
-                  tag: widget.selectedItem.id,
+                  tag: selectedItem.id,
                   child: SizedBox(
                     child: CachedNetworkImage(
-                      imageUrl: Constants.baseAPIUrl + widget.selectedItem.image,
+                      imageUrl: Constants.baseAPIUrl + selectedItem.image,
                       fit: BoxFit.fitWidth,
                       placeholder: (context, url) => const Center(
                         child: CircularProgressIndicator(),
@@ -85,7 +78,7 @@ class DetailsScreenState extends State<DetailScreen> {
                               Expanded(
                                   child: Text(
                                 // Regular Expression for put commas to the amount of money
-                                '\$${widget.selectedItem.price.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}',
+                                '\$${selectedItem.price.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}',
                                 style: AppTypography.title01,
                               )),
                               // SizedBox(width: 1.w),
@@ -98,7 +91,7 @@ class DetailsScreenState extends State<DetailScreen> {
                                 ),
                                 SizedBox(width: 1.w),
                                 Text(
-                                  widget.selectedItem.bedrooms.toString(),
+                                  selectedItem.bedrooms.toString(),
                                   style: AppTypography.detail,
                                 ),
                                 SizedBox(width: 4.w),
@@ -110,7 +103,7 @@ class DetailsScreenState extends State<DetailScreen> {
                                 ),
                                 SizedBox(width: 1.w),
                                 Text(
-                                  widget.selectedItem.bathrooms.toString(),
+                                  selectedItem.bathrooms.toString(),
                                   style: AppTypography.detail,
                                 ),
                                 SizedBox(width: 4.w),
@@ -122,12 +115,12 @@ class DetailsScreenState extends State<DetailScreen> {
                                 ),
                                 SizedBox(width: 1.w),
                                 Text(
-                                  widget.selectedItem.size.toString(),
+                                  selectedItem.size.toString(),
                                   style: AppTypography.detail,
                                 ),
                                 SizedBox(width: 4.w),
                                 Visibility(
-                                  visible: widget.selectedItem.distance == 0.0 ? false : true,
+                                  visible: selectedItem.distance == 0.0 ? false : true,
                                   child: SvgPicture.asset(
                                     'assets/icons/ic_location.svg',
                                     width: 2.h,
@@ -138,9 +131,9 @@ class DetailsScreenState extends State<DetailScreen> {
                                 ),
                                 SizedBox(width: 1.w),
                                 Visibility(
-                                  visible: widget.selectedItem.distance == 0.0 ? false : true,
+                                  visible: selectedItem.distance == 0.0 ? false : true,
                                   child: Text(
-                                    '${widget.selectedItem.distance} km',
+                                    '${selectedItem.distance} km',
                                     style: AppTypography.detail,
                                   ),
                                 ),
@@ -154,7 +147,7 @@ class DetailsScreenState extends State<DetailScreen> {
                           ),
                           SizedBox(height: 2.h),
                           Text(
-                            widget.selectedItem.description,
+                            selectedItem.description,
                             style: AppTypography.body,
                           ),
                           SizedBox(height: 2.h),
