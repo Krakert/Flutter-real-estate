@@ -15,10 +15,13 @@ import '../../utils/constants.dart';
 import '../theme/colors.dart';
 
 class DetailScreen extends StatelessWidget {
+  // Constructor to initialize the DetailScreen widget with the selected property.
   DetailScreen({Key? key, required this.selectedItem}) : super(key: key);
 
+  // Property data for the selected property.
   final HouseData selectedItem;
 
+  // Function to open the maps app with a given latitude and longitude.
   void launchMapsApp(double latitude, double longitude) async {
     String mapsUrl;
     if (Platform.isAndroid) {
@@ -40,35 +43,42 @@ class DetailScreen extends StatelessWidget {
           title: '',
         ),
         body: Stack(children: [
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Hero(
-                  tag: selectedItem.id,
-                  child: SizedBox(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              // Display the property image with a hero tag.
+              SizedBox(
+                height: MediaQuery.of(context).orientation == Orientation.portrait ? 250 : 200,
+                child: SingleChildScrollView(
+                  child: Hero(
+                    tag: selectedItem.id,
                     child: CachedNetworkImage(
                       imageUrl: Constants.baseAPIUrl + selectedItem.image,
-                      fit: BoxFit.fitWidth,
+                      fit: BoxFit.contain,
+                      // Placeholder for the image while loading.
                       placeholder: (context, url) => const Center(
                         child: CircularProgressIndicator(),
                       ),
+                      // Widget displayed when an error occurs while loading the image.
                       errorWidget: (context, url, error) => const Icon(Icons.error),
                     ),
                   ),
                 ),
-                SizedBox(
-                  child: Container(
-                    transform: Matrix4.translationValues(0.0, -10.0, 0.0),
-                    decoration: const BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(12.0),
-                        topRight: Radius.circular(12.0),
-                      ),
+              ),
+              Expanded(
+                child: Container(
+                  // Decorative container for property details.
+                  transform: Matrix4.translationValues(0.0, -10.0, 0.0),
+                  decoration: const BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(12.0),
+                      topRight: Radius.circular(12.0),
                     ),
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 6.w, right: 6.w, top: 6.h, bottom: 12.h),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 6.w, right: 6.w, top: 4.h, bottom: 1.h),
+                    child: SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -77,11 +87,12 @@ class DetailScreen extends StatelessWidget {
                             children: [
                               Expanded(
                                   child: Text(
-                                // Regular Expression for put commas to the amount of money
+                                // Format the property price with commas.
                                 '\$${selectedItem.price.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}',
                                 style: AppTypography.title01,
                               )),
-                              // SizedBox(width: 1.w),
+                              // Add all icons with their associated values
+                              SizedBox(width: 1.w),
                               Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                                 SvgPicture.asset(
                                   'assets/icons/ic_bed.svg',
@@ -146,6 +157,7 @@ class DetailScreen extends StatelessWidget {
                             style: AppTypography.title02,
                           ),
                           SizedBox(height: 2.h),
+                          // Display the property description.
                           Text(
                             selectedItem.description,
                             style: AppTypography.body,
@@ -159,6 +171,7 @@ class DetailScreen extends StatelessWidget {
                           SizedBox(
                             height: 34.h,
                             child: GoogleMap(
+                              // Display the property location on a map.
                               initialCameraPosition: CameraPosition(
                                 target: LatLng(selectedItem.latitude.toDouble(),
                                     selectedItem.longitude.toDouble()),
@@ -167,10 +180,12 @@ class DetailScreen extends StatelessWidget {
                               zoomControlsEnabled: false,
                               mapToolbarEnabled: false,
                               markers: {
+                                // Place a marker at the property location.
                                 Marker(
                                     markerId: const MarkerId(Strings.mapsLocationId),
                                     position: LatLng(selectedItem.latitude.toDouble(),
                                         selectedItem.longitude.toDouble()),
+                                    infoWindow: const InfoWindow(title: Strings.mapsText),
                                     onTap: () {
                                       launchMapsApp(selectedItem.latitude.toDouble(),
                                           selectedItem.longitude.toDouble());
@@ -183,8 +198,8 @@ class DetailScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ]));
   }
