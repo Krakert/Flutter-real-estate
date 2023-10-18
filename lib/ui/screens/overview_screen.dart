@@ -20,8 +20,7 @@ class OverviewScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Watch the list of houses from the provider.
     final houseDataValue = ref.watch(listHousesProvider);
-    final textSearchbarIsEmptyProvider =
-        Provider<bool>((ref) => ref.watch(textSearchBarProvider).isEmpty);
+    final textSearchBarIsEmptyProvider = StateProvider<bool>((ref) => true);
 
     return Column(children: [
       // Search bar section
@@ -44,7 +43,7 @@ class OverviewScreen extends ConsumerWidget {
                 suffixIcon: Consumer(
                   builder: (context, ref, _) =>
                       // Show search or clear button based on textSearchbarIsEmptyProvider.
-                      ref.watch(textSearchbarIsEmptyProvider)
+                      ref.watch(textSearchBarIsEmptyProvider)
                           ? IconButton(
                               icon: const Icon(Icons.search, color: AppColors.medium),
                               onPressed: () {},
@@ -55,14 +54,24 @@ class OverviewScreen extends ConsumerWidget {
                                 // Clear the search text when the clear button is pressed.
                                 ref.read(textSearchBarProvider.notifier).update((_) => '');
                                 searchController.clear();
+                                FocusScopeNode currentFocus = FocusScope.of(context);
+
+                                if (!currentFocus.hasPrimaryFocus) {
+                                  currentFocus.unfocus();
+                                  ref.read(textSearchBarIsEmptyProvider.notifier).update((state) => true);
+                                }
                               },
                             ),
                 ),
                 border: InputBorder.none,
               ),
-              onChanged: (value) {
-                // Update the search text when the user types.
+              onSubmitted: (value) {
+                // Update the search text when the user presses enter.
                 ref.read(textSearchBarProvider.notifier).update((_) => value);
+              },
+              onChanged: (value) {
+                // Update the state of the searchbar
+                ref.read(textSearchBarIsEmptyProvider.notifier).update((state) => value.isEmpty);
               },
             ),
           ),
