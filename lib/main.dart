@@ -4,7 +4,6 @@ import 'package:flutter_real_estate/ui/components/strings.dart';
 import 'package:flutter_real_estate/ui/components/top_app_bar.dart';
 import 'package:flutter_real_estate/ui/screens/about_screen.dart';
 import 'package:flutter_real_estate/ui/screens/overview_screen.dart';
-import 'package:flutter_real_estate/ui/screens/splash_screen.dart';
 import 'package:flutter_real_estate/ui/theme/colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sizer/sizer.dart';
@@ -30,7 +29,7 @@ class MyApp extends StatelessWidget {
                 fontFamily: 'GothamSSm',
                 scaffoldBackgroundColor: AppColors.lightGray,
               ),
-              home: const SplashScreen(),
+              home: HomePage(),
             );
           },
         );

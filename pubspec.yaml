@@ -23,6 +23,7 @@ dependencies:
   google_maps_flutter: ^2.5.0
   location: ^5.0.3
   geolocator: ^10.0.1
+  flutter_native_splash: ^2.3.2
 
 dev_dependencies:
   flutter_test:
@@ -52,3 +53,10 @@ flutter:
         - asset: assets/fonts/Gotham SSm/GothamSSm-Medium.otf
 
   uses-material-design: true
+
+flutter_native_splash:
+  image: "assets/images/launcher_icon.png"
+  color: "#E65541"
+  android_12:
+    image: "assets/images/launcher_icon.png"
+    color: "#E65541"
