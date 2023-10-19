@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../application/location_permissions_provider.dart';
-import '../../application/providers.dart';
+import '../../application/selected_sort_provider.dart';
+import '../../application/text_searchbar_provider.dart';
 import '../../models/house_model.dart';
 import '../../models/sort_model.dart';
 import 'card_house.dart';

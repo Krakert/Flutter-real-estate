@@ -9,7 +9,7 @@ import 'package:flutter_real_estate/ui/theme/colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sizer/sizer.dart';
 
-import 'application/providers.dart';
+import 'application/selected_index_provider.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -44,6 +44,7 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Which widget to show on screen
     final selectedIndex = ref.watch(selectedIndexProvider);
 
     return Scaffold(

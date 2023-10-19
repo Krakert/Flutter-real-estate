@@ -22,7 +22,7 @@ final listHousesProvider = FutureProvider<List<HouseData>>((ref) async {
   switch (response.statusCode) {
     case 200:
       final data = json.decode(response.body);
-
+      // Map all houses to the data class and calculate the distance
       for (var houseData in data) {
         int latitude = houseData['latitude'];
         int longitude = houseData['longitude'];

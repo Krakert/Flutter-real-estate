@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../application/providers.dart';
+import '../../application/selected_index_provider.dart';
 import '../theme/colors.dart';
 
 class BottomAppBarMenu extends ConsumerWidget {

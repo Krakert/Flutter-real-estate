@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../application/providers.dart';
+import '../../application/selected_sort_provider.dart';
 import '../../models/sort_model.dart';
 import '../theme/colors.dart';
 import '../theme/type.dart';

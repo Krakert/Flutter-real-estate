@@ -7,7 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../application/list_houses_provider.dart';
-import '../../application/providers.dart';
+import '../../application/selected_sort_provider.dart';
+import '../../application/text_searchbar_provider.dart';
 import '../components/filter_card.dart';
 import '../theme/colors.dart';
 
