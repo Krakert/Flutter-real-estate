@@ -18,6 +18,7 @@ class FilterCard extends ConsumerWidget {
     final selectedState = ref.watch(selectedSortProvider);
     return GestureDetector(
       onTap: () {
+        // Change the order type
         if (selectedId == cardId) {
           ref.read(selectedSortProvider.notifier).update((state) =>
               SortProviderModel(
@@ -42,6 +43,7 @@ class FilterCard extends ConsumerWidget {
               Visibility(
                   visible: selectedId == cardId,
                   child: Icon(
+                    // Show different Icon base on the Order type
                     selectedState.oder == Order.desc ? Icons.arrow_downward : Icons.arrow_upward,
                     color: AppColors.medium,
                   )),

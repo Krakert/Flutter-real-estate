@@ -8,6 +8,7 @@ class EmptyListWarning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Show this when the search result is unable to find a result
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

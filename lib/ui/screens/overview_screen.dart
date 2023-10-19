@@ -113,6 +113,8 @@ class OverviewScreen extends ConsumerWidget {
       ),
       Expanded(
         child: houseDataValue.when(
+          // This is set to `false` to make sure the loading state is shown when
+          // the data is refreshed or tried to load again
           skipLoadingOnRefresh: false,
           data: (houses) => ListCardHouse(houseList: houses),
           loading: () => Center(child: CircularProgressIndicator()),

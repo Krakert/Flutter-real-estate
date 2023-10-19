@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_real_estate/ui/theme/colors.dart';
 
+// Setup of font types based on input from design theme
 class AppTypography {
   static const title01 = TextStyle(
     fontFamily: "GothamSSm",

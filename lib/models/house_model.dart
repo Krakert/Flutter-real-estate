@@ -1,3 +1,4 @@
+// Data class used to map the JSON from the `list_houses_provider`
 class HouseData {
   final int id;
   final int price;

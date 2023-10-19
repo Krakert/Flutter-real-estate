@@ -11,6 +11,7 @@ class ErrorState extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Show this when a problem occurred when loading the data
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -24,6 +25,7 @@ class ErrorState extends ConsumerWidget {
           width: 200,
           child: GestureDetector(
             onTap: () {
+              // Make the API call again to try to reload data
               ref.invalidate(listHousesProvider);
             },
             child: Padding(

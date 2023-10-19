@@ -8,6 +8,7 @@ import '../models/house_model.dart';
 import '../utils/constants.dart';
 import '../utils/helper.dart';
 
+// Provider to make the API call and return the result in a list
 final listHousesProvider = FutureProvider<List<HouseData>>((ref) async {
   final client = http.Client();
   final uri = Uri.parse(Constants.houseAPIUrl);
@@ -27,8 +28,9 @@ final listHousesProvider = FutureProvider<List<HouseData>>((ref) async {
         int latitude = houseData['latitude'];
         int longitude = houseData['longitude'];
         double distance = await Helper.calculateDistance(latitude.toDouble(), longitude.toDouble());
-
+        // Result from the JSON
         final house = HouseData.fromJson(houseData);
+        // Add the distance to a new
         final houseWithDistance = HouseData(
             id: house.id,
             price: house.price,

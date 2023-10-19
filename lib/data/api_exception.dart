@@ -1,3 +1,4 @@
+// Exceptions for the API call
 sealed class APIException implements Exception {
   APIException(this.message);
   final String message;
